@@ -2,7 +2,10 @@ import './App.css'
 import Connex from "@vechain/connex"
 import { useState } from 'react';
 import { useEffect } from 'react';
-import filters from './components/filters'
+import filters from './components/filters';
+import tokenURIAbi from './components/tokenURIAbi';
+import contractToAccount from './components/contractToAccount';
+import mutants from './assets/mutants.png'
 
 const startDateTimeString = "9/3/23 9:30 PM UTC";
 const startTimestamp = Date.parse(startDateTimeString) / 1000; 
@@ -21,6 +24,89 @@ const nftCollections = {
   "0xc766ddd21f14862ef426f15bfb28573fdad8bc51": "Multiverse Mino Mob",
   "0x862b1cb1c75ca2e2529110a9d43564bd5cd83828": "Elixir"
 };
+
+function getAccountForContract(contractAddress) {
+  return contractToAccount[contractAddress] || null;
+}
+
+async function getImageForCollection(account, tokenId) {
+  console.log(account.address);
+
+  let nftURI,
+    URIOutput,
+    metadataResponse,
+    metadata,
+    imageUrl,
+    presentImage,
+    presentImageURL;
+
+  switch (account.address) {
+    case "0xf4d82631be350c37d92ee816c2bd4d5adf9e6493":
+      nftURI = account.method(tokenURIAbi);
+      URIOutput = await nftURI.call(tokenId);
+
+      metadataResponse = await fetch(
+        `https://arweave.net/${URIOutput.decoded[0].substr(5)}`
+      );
+      console.log(metadataResponse);
+      metadata = await metadataResponse.json();
+
+      imageUrl = metadata.image;
+      presentImage = await fetch(`https://arweave.net/${imageUrl.substr(5)}`);
+      presentImageURL = presentImage.url;
+
+      return presentImageURL;
+
+    case "0x523bef286ac6b08eb1a9db765970852b086903fa":
+      // nftURI = account.method(tokenURIAbi);
+      // URIOutput = await nftURI.call(tokenId);
+
+      // metadataResponse = await fetch(
+      //   `https://ipfs.io/ipfs/${URIOutput.decoded[0].substr(7)}`
+      // );
+      // metadata = await metadataResponse.json();
+      // imageUrl = metadata.image;
+      // presentImage = await fetch(`https://ipfs.io/ipfs/${imageUrl.substr(7)}`);
+      // presentImageURL = presentImage.url;
+      presentImageURL = mutants;
+      return presentImageURL;
+
+    case "0xc766ddd21f14862ef426f15bfb28573fdad8bc51":
+      nftURI = account.method(tokenURIAbi);
+      URIOutput = await nftURI.call(tokenId);
+
+      metadataResponse = await fetch(
+        `https://arweave.net/${URIOutput.decoded[0].substr(5)}`
+      );
+      console.log(metadataResponse);
+      metadata = await metadataResponse.json();
+
+      imageUrl = metadata.image;
+      presentImage = await fetch(`https://arweave.net/${imageUrl.substr(5)}`);
+      presentImageURL = presentImage.url;
+
+      return presentImageURL;
+
+    case "0x862b1cb1c75ca2e2529110a9d43564bd5cd83828":
+      nftURI = account.method(tokenURIAbi);
+      URIOutput = await nftURI.call(tokenId);
+      console.log(URIOutput);
+      metadataResponse = await fetch(
+        `https://arweave.net/${URIOutput.decoded[0].substr(5)}`
+      );
+      console.log(metadataResponse);
+      metadata = await metadataResponse.json();
+      console.log(metadata);
+      imageUrl = metadata.animation_url;
+      presentImage = await fetch(`https://arweave.net/${imageUrl.substr(5)}`);
+      presentImageURL = presentImage.url;
+
+      return presentImageURL;
+
+    default:
+      return "Default Image URL";
+  }
+}
 
 async function fetchData(blockHeight, token, amt) {
   const response = await fetch("https://api.vechain.energy/v1/call/main", {
@@ -299,6 +385,10 @@ export default function App() {
               decodedLog.buyer = buyer;
               decodedLog.price = price;
               decodedLog.tokenId = tokenId;
+
+              const account = getAccountForContract(nftAddress);
+
+              decodedLog.image = await getImageForCollection(account, tokenId);
   
               return decodedLog;
             })
@@ -319,6 +409,26 @@ export default function App() {
           {transfers.map((transfer, index) => (
             <li key={index}
             style={{ border: "1px solid white", display: "inline-blick"}}>
+                            {transfer.image &&
+              typeof transfer.image === "string" &&
+              transfer.image.endsWith(".mp4") ? (
+                <video
+                  controls // Add this attribute to show video controls
+                  width="320" // Set the desired width
+                  height="240" // Set the desired height
+                  autoPlay
+                  loop
+                >
+                  <source src={transfer.image} type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
+              ) : (
+                <img
+                  src={transfer.image}
+                  alt="nft"
+                  style={{ maxWidth: "100%", height: "auto" }}
+                />
+              )}
               <p>Type: {transfer.type}</p>
               <p>Collection: {transfer.nftAddress}</p>
               <p>Token ID: {transfer.tokenId}</p>
