@@ -20,10 +20,13 @@ const connex = new Connex({
   network: "main"
 });
 
-const nickName = connex.thor
+//
+
+const nickName = await connex.thor
         .account("0xc7592f90A6746E5D55e4a1543b6caE6D5b11d258")
         .method(ABIWoVGetAccountProperties)
         .call("0x54ffD60A951ea27A2c88c7077ecFa68837487042")
+      console.log("nickname", nickName.decoded[4])
 
 const startDateTimeString = "9/24/23 9:30 PM UTC";
 const startTimeStamp = Date.parse(startDateTimeString) / 1000; // Divide by 1000 to get seconds
@@ -289,7 +292,7 @@ export default function App() {
                 console.log("default case");
                 break;
             }
-            console.log(decodedLog)
+
             const getBuyer = (transfer) => {
               switch (transfer.type) {
                 case "BVM Purchase":
@@ -404,14 +407,21 @@ export default function App() {
             })();
 
             const buyer = getBuyer(decodedLog);
-           
+            console.log("buyer", buyer)
+
+            const nickName = await connex.thor
+              .account("0xc7592f90A6746E5D55e4a1543b6caE6D5b11d258")
+              .method(ABIWoVGetAccountProperties)
+              .call(buyer)
+              console.log("nickname", nickName.decoded[4])
+
             const tokenId = getTokenId(decodedLog);
             const price = await getPrice(decodedLog);
 
             const collectionName = nftCollections[nftAddress];
 
             decodedLog.nftAddress = collectionName;
-            decodedLog.buyer = buyer;
+            decodedLog.buyer = nickName.decoded[4];
             decodedLog.price = price;
             decodedLog.tokenId = tokenId;
 
