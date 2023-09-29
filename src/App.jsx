@@ -505,19 +505,20 @@ export default function App() {
           <div className="scoreboard">
             
             <h2>Buyer Rankings</h2>
-            <h3>
-              {totalCount} purchases = {Math.round(vetCount)} $VET
-            </h3>
+
             <ul>
               {Object.entries(walletCounts).map(([wallet, count]) => (
                 <li key={wallet}>
                   <p>
-                    {wallet} <br/>with {quantities[wallet]}, avg{" "}
+                    <span>{wallet}</span> <br/>with {quantities[wallet]}, avg{" "}
                     {avgPurchasePrices[wallet].toFixed(2)} = {count} VET
                   </p>
                 </li>
               ))}
             </ul>
+            <h3>
+              Total of {totalCount} purchases for {Math.round(vetCount)} $VET
+            </h3>
           </div>
         </div>
         
