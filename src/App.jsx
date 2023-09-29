@@ -478,9 +478,10 @@ export default function App() {
               alt="logo"
             />
             <h1>Sweeper Tracker</h1>
-            <p>
+
+            <h4>
               Period began on {new Date(startTimeStamp * 1000).toLocaleString()} and ends on {new Date(endTimeStamp * 1000).toLocaleString()}
-            </p>
+            </h4>
         </div> 
 
         <div className="sections">
@@ -497,11 +498,11 @@ export default function App() {
           </div>
       
           <div className="scoreboard">
-            <h1>
-              {totalCount} purchases = {Math.round(vetCount)} $VET
-            </h1>
+            
             <h2>Buyer Rankings</h2>
-
+            <h3>
+              {totalCount} purchases = {Math.round(vetCount)} $VET
+            </h3>
             <ul>
               {Object.entries(walletCounts).map(([wallet, count]) => (
                 <li key={wallet}>
@@ -551,8 +552,7 @@ export default function App() {
                   </p>
                 </li>
                 ))}
-            </ul>
-            
+            </ul>           
       </div>
     </div>
   );
