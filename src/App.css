@@ -9,42 +9,6 @@ ul {
   padding: 0px;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
-
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
-}
-
 .hero {
   display: flex;
   flex-direction: column;
@@ -61,7 +25,6 @@ ul {
 .hero p {
   margin:0;
   padding:0;
-
 }
 
 .sections {
@@ -95,21 +58,20 @@ span {
   border-radius: 10%;
 }
 
+li img {
+  border-radius: 10%;
+}
+
 @media (max-width: 750px) {
 .sections {
   display: flex;
   flex-direction: column;
 }
 
-.prize-image {
-  border-radius: "10%";
-}
-
 .transfers {
   display: grid;
   grid-template-columns: 1fr;
 }
-
 }
 
 @media (min-width: 750px) and (max-width: 1069px) {
