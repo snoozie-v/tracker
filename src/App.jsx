@@ -546,7 +546,7 @@ export default function App() {
                   <p>Type: {transfer.type}</p>
                   <p>NFT Collection: {transfer.nftAddress}</p>
                   <p>Token ID: {transfer.tokenId}</p>
-                  <p>Buyer {transfer.buyer}</p>
+                  <p>Buyer: {transfer.buyer}</p>
                   <p>Price: {transfer.price}</p>
                   <p>
                     Time:{" "}
