@@ -187,7 +187,7 @@ export default function App() {
           })
           .order("desc")
           .apply(0, 200);
-
+          console.log(logs)
         const splitHexData = (hexData, numParts) => {
           const cleanHex = hexData.startsWith("0x")
             ? hexData.slice(2)
