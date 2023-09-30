@@ -56,17 +56,17 @@ async function getImageForCollection(account, tokenId) {
       return presentImageURL;
 
     case "0x523bef286ac6b08eb1a9db765970852b086903fa":
-      nftURI = account.method(tokenURIAbi);
-      URIOutput = await nftURI.call(tokenId);
+      // nftURI = account.method(tokenURIAbi);
+      // URIOutput = await nftURI.call(tokenId);
 
-      metadataResponse = await fetch(
-        `https://ipfs.io/ipfs/${URIOutput.decoded[0].substr(7)}`
-      );
-      metadata = await metadataResponse.json();
-      imageUrl = metadata.image;
-      presentImage = await fetch(`https://ipfs.io/ipfs/${imageUrl.substr(7)}`);
-      presentImageURL = presentImage.url;
-      // presentImageURL = mutants;
+      // metadataResponse = await fetch(
+      //   `https://ipfs.io/ipfs/${URIOutput.decoded[0].substr(7)}`
+      // );
+      // metadata = await metadataResponse.json();
+      // imageUrl = metadata.image;
+      // presentImage = await fetch(`https://ipfs.io/ipfs/${imageUrl.substr(7)}`);
+      // presentImageURL = presentImage.url;
+      presentImageURL = mutants;
       return presentImageURL;
 
     case "0xc766ddd21f14862ef426f15bfb28573fdad8bc51":
@@ -397,13 +397,13 @@ export default function App() {
             })();
 
             const buyer = getBuyer(decodedLog);
-
+            console.log("buyer", buyer)
 
             const nickName = await connex.thor
               .account("0xc7592f90A6746E5D55e4a1543b6caE6D5b11d258")
               .method(ABIWoVGetAccountProperties)
               .call(buyer)
-
+              console.log("nickname", nickName.decoded[4])
 
             const tokenId = getTokenId(decodedLog);
             const price = await getPrice(decodedLog);
