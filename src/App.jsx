@@ -543,7 +543,7 @@ export default function App() {
                     <img
                       src={transfer.image}
                       alt="nft"
-                      style={{ width: "320px", height: "320px", borderRadius: "10%" }}
+                      style={{ width: "75%", height: "auto",  }}
                     />
                   )}
                   <p>Type: {transfer.type}</p>
