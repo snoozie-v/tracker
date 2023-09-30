@@ -1,8 +1,12 @@
 #root {
-  max-width: 1280px;
+  /* max-width: 1280px; */
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+}
+
+ul {
+  padding: 0px;
 }
 
 .logo {
@@ -48,10 +52,16 @@
 }
 
 .hero img {
-  width: 500px;
+  width: 50%;
   margin: 0px;
   border: 0px;
-  padding: 0px
+  padding: 0px;
+}
+
+.hero p {
+  margin:0;
+  padding:0;
+
 }
 
 .sections {
@@ -70,7 +80,41 @@
   padding: 10px;
 }
 
+.transfers li {
+  border-radius: 10%;
+}
+
+
 span {
   font-weight: bold;
   font-size: large;
+}
+
+.prize-image {
+  width: 75%;
+  border-radius: 10%;
+}
+
+@media (max-width: 750px) {
+.sections {
+  display: flex;
+  flex-direction: column;
+}
+
+.prize-image {
+  border-radius: "10%";
+}
+
+.transfers {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+}
+
+@media (min-width: 750px) and (max-width: 1069px) {
+  .transfers {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
 }

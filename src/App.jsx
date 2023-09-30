@@ -10,8 +10,6 @@ import contractToAccount from "./components/contractToAccount";
 import mutants from "./assets/mutants.png";
 import oct15 from "./assets/oct15.jpg";
 import {
-  ABIEnergyGetNicknameFor,
-  ABIVeSeaGetProfile,
   ABIWoVGetAccountProperties
 } from "./components/ABI";
 
@@ -484,18 +482,19 @@ export default function App() {
             />
             <h1>Sweeper Tracker</h1>
 
-            <h4>
-              Period began on {new Date(startTimeStamp * 1000).toLocaleString()} and ends on {new Date(endTimeStamp * 1000).toLocaleString()}
-            </h4>
+            <p>
+              Period began on {new Date(startTimeStamp * 1000).toLocaleString()} 
+            </p><br/>
+            <p>Period ends on {new Date(endTimeStamp * 1000).toLocaleString()}</p>
         </div> 
 
         <div className="sections">
           <div className="prize">
             <h2>Top Buyer by $VET spent will receive</h2>
             <img
+              className="prize-image"
               src={oct15}
               alt="sweeper reward"
-              style={{ borderRadius: "10%", maxWidth: "90%", height: "auto" }}
             />
                       <h3>Elixir Raffle - 1k VET per entry</h3>
             <p>If total spent is more than 10,000 $VET then add 1 Rare</p>
@@ -524,7 +523,7 @@ export default function App() {
         
         
             <h3>Transfers</h3>
-            
+            <div >
             <ul className='transfers'>
 
               {transfers.map((transfer, index) => (
@@ -544,7 +543,7 @@ export default function App() {
                     <img
                       src={transfer.image}
                       alt="nft"
-                      style={{ width: "320px", height: "320px" }}
+                      style={{ width: "320px", height: "320px", borderRadius: "10%" }}
                     />
                   )}
                   <p>Type: {transfer.type}</p>
@@ -558,7 +557,8 @@ export default function App() {
                   </p>
                 </li>
                 ))}
-            </ul>           
+            </ul> 
+            </div>         
       </div>
     </div>
   );
