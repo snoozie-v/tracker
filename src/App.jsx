@@ -3,13 +3,13 @@ import { useState, useEffect } from "react";
 import Connex from "@vechain/connex";
 import minomob from "./assets/minomob.png";
 import nftCollections from "./components/nftCollections";
-
 import filters from "./components/filters";
 import tokenURIAbi from "./components/tokenURIAbi";
 import contractToAccount from "./components/contractToAccount";
 import mutants from "./assets/mutants.png";
 import oct15 from "./assets/oct15.jpg";
 import {
+  ABIVeSeaGetProfile,
   ABIWoVGetAccountProperties
 } from "./components/ABI";
 
@@ -397,13 +397,28 @@ export default function App() {
             })();
 
             const buyer = getBuyer(decodedLog);
-            console.log("buyer", buyer)
 
-            const nickName = await connex.thor
-              .account("0xc7592f90A6746E5D55e4a1543b6caE6D5b11d258")
-              .method(ABIWoVGetAccountProperties)
-              .call(buyer)
-              console.log("nickname", nickName.decoded[4])
+
+            const getProfileName = async (buyer) => {
+              const wovNickName = await connex.thor
+                .account("0xc7592f90A6746E5D55e4a1543b6caE6D5b11d258")
+                .method(ABIWoVGetAccountProperties)
+                .call(buyer)
+                if(wovNickName && wovNickName.decoded[4]) {
+                  return wovNickName.decoded[4]
+                }
+              const veSeaProfile = await connex.thor
+                .account("0xdaeda865296CeE66dc6863f9e93751f00B3606Fb")
+                .method(ABIVeSeaGetProfile)
+                .call(buyer);
+                if(veSeaProfile && veSeaProfile.decoded[0][1]) {
+                  return veSeaProfile.decoded[0][1]
+                }
+                return buyer
+              }
+
+              const profileName = await getProfileName(buyer)
+              decodedLog.buyer = profileName
 
             const tokenId = getTokenId(decodedLog);
             const price = await getPrice(decodedLog);
@@ -411,12 +426,11 @@ export default function App() {
             const collectionName = nftCollections[nftAddress];
 
             decodedLog.nftAddress = collectionName;
-            decodedLog.buyer = nickName.decoded[4];
+
             decodedLog.price = price;
             decodedLog.tokenId = tokenId;
 
             const account = getAccountForContract(nftAddress);
-
             decodedLog.image = await getImageForCollection(account, tokenId);
             return decodedLog;
           })
@@ -480,9 +494,9 @@ export default function App() {
             <h1>Sweeper Tracker</h1>
 
             <p>
-              Period began on {new Date(startTimeStamp * 1000).toLocaleString()} 
+              Start: {new Date(startTimeStamp * 1000).toLocaleString()} 
             </p><br/>
-            <p>Period ends on {new Date(endTimeStamp * 1000).toLocaleString()}</p>
+            <p>End: {new Date(endTimeStamp * 1000).toLocaleString()}</p>
         </div> 
 
         <div className="sections">
@@ -544,7 +558,7 @@ export default function App() {
                     />
                   )}
                   <p>Type: {transfer.type}</p>
-                  <p>NFT Collection: {transfer.nftAddress}</p>
+                  <p>Collection: {transfer.nftAddress}</p>
                   <p>Token ID: {transfer.tokenId}</p>
                   <p>Buyer: {transfer.buyer}</p>
                   <p>Price: {transfer.price}</p>
