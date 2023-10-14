@@ -411,6 +411,7 @@ export default function App() {
                 .account("0xdaeda865296CeE66dc6863f9e93751f00B3606Fb")
                 .method(ABIVeSeaGetProfile)
                 .call(buyer);
+                console.log("veSeaProfile", veSeaProfile)
                 if(veSeaProfile && veSeaProfile.decoded[0][1]) {
                   return veSeaProfile.decoded[0][1]
                 }
