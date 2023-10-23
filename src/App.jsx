@@ -18,11 +18,11 @@ const connex = new Connex({
   network: "main"
 });
 
-const startDateTimeString = "9/24/23 9:30 PM UTC";
+const startDateTimeString = "10/15/23 9:30 PM UTC";
 const startTimeStamp = Date.parse(startDateTimeString) / 1000; 
 
 
-const endDateTimeString = "10/15/23 9:30 PM UTC";
+const endDateTimeString = "11/5/23 11:59 PM UTC";
 const endTimeStamp = Date.parse(endDateTimeString) / 1000;
 
 function getAccountForContract(contractAddress) {
@@ -502,15 +502,16 @@ export default function App() {
 
         <div className="sections">
           <div className="prize">
-            <h2>Top Buyer by $VET spent will receive</h2>
-            <img
+            <h2>Prize is TBA</h2>
+            
+            {/* <img
               className="prize-image"
               src={oct15}
               alt="sweeper reward"
-            />
-                      <h3>Elixir Raffle - 1k VET per entry</h3>
+            /> */}
+                      {/* <h3>Elixir Raffle - 1k VET per entry</h3>
             <p>If total spent is more than 10,000 $VET then add 1 Rare</p>
-            <p>If total spent is more than 20,000 $VET then add 1 Rare</p>
+            <p>If total spent is more than 20,000 $VET then add 1 Rare</p> */}
           </div>
       
           <div className="scoreboard">
