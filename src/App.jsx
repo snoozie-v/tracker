@@ -7,7 +7,7 @@ import filters from "./components/filters";
 import tokenURIAbi from "./components/tokenURIAbi";
 import contractToAccount from "./components/contractToAccount";
 import mutants from "./assets/mutants.png";
-import oct15 from "./assets/oct15.jpg";
+import prizeImage from "./assets/nov5prize.jpg";
 import {
   ABIVeSeaGetProfile,
   ABIWoVGetAccountProperties
@@ -30,6 +30,8 @@ function getAccountForContract(contractAddress) {
 }
 
 async function getImageForCollection(account, tokenId) {
+  let tokenIdString = tokenId.toString()
+
   let nftURI,
     URIOutput,
     metadataResponse,
@@ -42,7 +44,7 @@ async function getImageForCollection(account, tokenId) {
     case "0xf4d82631be350c37d92ee816c2bd4d5adf9e6493":
       nftURI = account.method(tokenURIAbi);
       URIOutput = await nftURI.call(tokenId);
-
+      console.log('OG UriOutPut', URIOutput)
       metadataResponse = await fetch(
         `https://arweave.net/${URIOutput.decoded[0].substr(5)}`
       );
@@ -52,22 +54,33 @@ async function getImageForCollection(account, tokenId) {
       imageUrl = metadata.image;
       presentImage = await fetch(`https://arweave.net/${imageUrl.substr(5)}`);
       presentImageURL = presentImage.url;
-
+      console.log(presentImageURL)
       return presentImageURL;
+
 
     case "0x523bef286ac6b08eb1a9db765970852b086903fa":
-      // nftURI = account.method(tokenURIAbi);
-      // URIOutput = await nftURI.call(tokenId);
-
-      // metadataResponse = await fetch(
-      //   `https://ipfs.io/ipfs/${URIOutput.decoded[0].substr(7)}`
-      // );
-      // metadata = await metadataResponse.json();
-      // imageUrl = metadata.image;
-      // presentImage = await fetch(`https://ipfs.io/ipfs/${imageUrl.substr(7)}`);
-      // presentImageURL = presentImage.url;
-      presentImageURL = mutants;
+      nftURI = account.method(tokenURIAbi);
+      URIOutput = await nftURI.call(tokenId);
+      console.log('mutant URI', URIOutput, tokenId)
+      console.log("uri", URIOutput.decoded[0], tokenId)
+      if (URIOutput.decoded[0].length > 59 || tokenId === 13489) {
+        presentImageURL = mutants;
+      } else {
+        metadataResponse = await fetch(
+          `https://arweave.net/${URIOutput.decoded[0].substr(5)}`
+        );
+        console.log('metaRes', metadataResponse, tokenId)
+      metadata = await metadataResponse.json();
+          console.log('metadata', metadata)
+      imageUrl = metadata.image;
+          console.log('imageUrl', imageUrl)
+      presentImage = await fetch(`https://arweave.net/${imageUrl.substr(5)}`);
+          console.log('presentImage', presentImage)
+      presentImageURL = presentImage.url;
+          console.log('presentImageUrl', presentImageURL)
+      }
       return presentImageURL;
+
 
     case "0xc766ddd21f14862ef426f15bfb28573fdad8bc51":
       nftURI = account.method(tokenURIAbi);
@@ -502,16 +515,15 @@ export default function App() {
 
         <div className="sections">
           <div className="prize">
-            <h2>Prize is TBA</h2>
+            <h2>Psycho beast with Mino Mob bulletproof vest</h2>
             
-            {/* <img
+            <img
               className="prize-image"
-              src={oct15}
+              src={prizeImage}
               alt="sweeper reward"
-            /> */}
-                      {/* <h3>Elixir Raffle - 1k VET per entry</h3>
-            <p>If total spent is more than 10,000 $VET then add 1 Rare</p>
-            <p>If total spent is more than 20,000 $VET then add 1 Rare</p> */}
+            />
+                      <h3>100k $BVC Raffle - 1k VET per entry</h3>
+            <p>If total spent is more than 20,000 $VET then add AI Avatar by <a href="https://twitter.com/ThorpesClothing">Thorpe</a></p>
           </div>
       
           <div className="scoreboard">
