@@ -63,17 +63,15 @@ async function getImageForCollection(account, tokenId) {
       URIOutput = await nftURI.call(tokenId);
       console.log('mutant URI', URIOutput, tokenId)
       console.log("uri", URIOutput.decoded[0], tokenId)
-      if (URIOutput.decoded[0].length > 59 || tokenId === 13489) {
+      if (URIOutput.decoded[0].length > 59) {
         presentImageURL = mutants;
       } else {
         metadataResponse = await fetch(
           `https://arweave.net/${URIOutput.decoded[0].substr(5)}`
         );
-        console.log('metaRes', metadataResponse, tokenId)
+        
       metadata = await metadataResponse.json();
-          console.log('metadata', metadata)
       imageUrl = metadata.image;
-          console.log('imageUrl', imageUrl)
       presentImage = await fetch(`https://arweave.net/${imageUrl.substr(5)}`);
           console.log('presentImage', presentImage)
       presentImageURL = presentImage.url;
