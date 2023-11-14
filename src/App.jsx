@@ -7,7 +7,7 @@ import filters from "./components/filters";
 import tokenURIAbi from "./components/tokenURIAbi";
 import contractToAccount from "./components/contractToAccount";
 import mutants from "./assets/mutants.png";
-import prizeImage from "./assets/nov5prize.jpg";
+import prizeImage from "./assets/yokai.png";
 import {
   ABIVeSeaGetProfile,
   ABIWoVGetAccountProperties
@@ -18,11 +18,11 @@ const connex = new Connex({
   network: "main"
 });
 
-const startDateTimeString = "10/15/23 9:30 PM UTC";
+const startDateTimeString = "11/5/23 11:59 PM UTC";
 const startTimeStamp = Date.parse(startDateTimeString) / 1000; 
 
 
-const endDateTimeString = "11/5/23 11:59 PM UTC";
+const endDateTimeString = "11/26/23 11:59 PM UTC";
 const endTimeStamp = Date.parse(endDateTimeString) / 1000;
 
 function getAccountForContract(contractAddress) {
@@ -513,15 +513,14 @@ export default function App() {
 
         <div className="sections">
           <div className="prize">
-            <h2>Psycho beast with Mino Mob bulletproof vest</h2>
+            <h2>Top Sweeper to receive Yokai #1767</h2>
             
             <img
               className="prize-image"
               src={prizeImage}
               alt="sweeper reward"
             />
-                      <h3>100k $BVC Raffle - 1k VET per entry</h3>
-            <p>If total spent is more than 20,000 $VET then add AI Avatar by <a href="https://twitter.com/ThorpesClothing">Thorpe</a></p>
+
           </div>
       
           <div className="scoreboard">
