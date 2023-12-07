@@ -12,17 +12,21 @@ import {
   ABIVeSeaGetProfile,
   ABIWoVGetAccountProperties
 } from "./components/ABI";
+import foodies504 from "./assets/foodies_504.jpg"
+import foodies2370 from "./assets/foodies_2370.jpg"
+import foodies2847 from "./assets/foodies_2847.jpg"
+import foodies2849 from "./assets/foodies_2849.jpg"
 
 const connex = new Connex({
   node: "https://mainnet.veblocks.net",
   network: "main"
 });
 
-const startDateTimeString = "11/5/23 11:59 PM UTC";
+const startDateTimeString = "11/27/23 12:00 UTC";
 const startTimeStamp = Date.parse(startDateTimeString) / 1000; 
 
 
-const endDateTimeString = "11/26/23 11:59 PM UTC";
+const endDateTimeString = "1/1/24 12:00 UTC";
 const endTimeStamp = Date.parse(endDateTimeString) / 1000;
 
 function getAccountForContract(contractAddress) {
@@ -513,14 +517,43 @@ export default function App() {
 
         <div className="sections">
           <div className="prize">
-            <h2>Top Sweeper to receive Yokai #1767</h2>
+            <h2>Top 4 Buyers to pick VeFoodies:</h2>
             
+            <div className="foodies">
+
+            <div className="prize-item">
+            <p className="caption">VeFoodies 504</p>
             <img
               className="prize-image"
-              src={prizeImage}
+              src={foodies504}
               alt="sweeper reward"
-            />
+            /></div>
 
+            <div className="prize-item">
+            <p className="caption">VeFoodies 2370</p>
+            <img
+              className="prize-image"
+              src={foodies2370}
+              alt="sweeper reward"
+            /> </div>
+
+            <div className="prize-item">
+            <p className="caption">VeFoodies 2847</p>
+            <img
+              className="prize-image"
+              src={foodies2847}
+              alt="sweeper reward"
+            /></div>
+
+            <div className="prize-item">
+            <p className="caption">VeFoodies 2849</p>
+            <img
+              className="prize-image"
+              src={foodies2849}
+              alt="sweeper reward"
+            /></div>
+
+          </div>
           </div>
       
           <div className="scoreboard">

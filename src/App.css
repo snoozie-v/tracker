@@ -53,6 +53,12 @@ span {
   font-size: large;
 }
 
+.foodies {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin: 25px;
+}
+
 .prize-image {
   width: 75%;
   border-radius: 10%;
