@@ -22,7 +22,7 @@ const connex = new Connex({
   network: "main"
 });
 
-const startDateTimeString = "11/27/23 12:00 UTC";
+const startDateTimeString = "11/26/23 12:00 UTC";
 const startTimeStamp = Date.parse(startDateTimeString) / 1000; 
 
 
