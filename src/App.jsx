@@ -7,7 +7,7 @@ import filters from "./components/filters";
 import tokenURIAbi from "./components/tokenURIAbi";
 import contractToAccount from "./components/contractToAccount";
 import mutants from "./assets/mutants.png";
-import prizeImage from "./assets/yokai.png";
+import prizeImage from "./assets/ticket.png"
 import {
   ABIVeSeaGetProfile,
   ABIWoVGetAccountProperties
@@ -22,11 +22,11 @@ const connex = new Connex({
   network: "main"
 });
 
-const startDateTimeString = "11/26/23 12:00 UTC";
+const startDateTimeString = "1/1/23 12:00 UTC";
 const startTimeStamp = Date.parse(startDateTimeString) / 1000; 
 
 
-const endDateTimeString = "1/1/24 12:00 UTC";
+const endDateTimeString = "2/1/24 12:00 UTC";
 const endTimeStamp = Date.parse(endDateTimeString) / 1000;
 
 function getAccountForContract(contractAddress) {
@@ -48,7 +48,6 @@ async function getImageForCollection(account, tokenId) {
     case "0xf4d82631be350c37d92ee816c2bd4d5adf9e6493":
       nftURI = account.method(tokenURIAbi);
       URIOutput = await nftURI.call(tokenId);
-      console.log('OG UriOutPut', URIOutput)
       metadataResponse = await fetch(
         `https://arweave.net/${URIOutput.decoded[0].substr(5)}`
       );
@@ -58,15 +57,12 @@ async function getImageForCollection(account, tokenId) {
       imageUrl = metadata.image;
       presentImage = await fetch(`https://arweave.net/${imageUrl.substr(5)}`);
       presentImageURL = presentImage.url;
-      console.log(presentImageURL)
       return presentImageURL;
 
 
     case "0x523bef286ac6b08eb1a9db765970852b086903fa":
       nftURI = account.method(tokenURIAbi);
       URIOutput = await nftURI.call(tokenId);
-      console.log('mutant URI', URIOutput, tokenId)
-      console.log("uri", URIOutput.decoded[0], tokenId)
       if (URIOutput.decoded[0].length > 59) {
         presentImageURL = mutants;
       } else {
@@ -77,9 +73,8 @@ async function getImageForCollection(account, tokenId) {
       metadata = await metadataResponse.json();
       imageUrl = metadata.image;
       presentImage = await fetch(`https://arweave.net/${imageUrl.substr(5)}`);
-          console.log('presentImage', presentImage)
       presentImageURL = presentImage.url;
-          console.log('presentImageUrl', presentImageURL)
+
       }
       return presentImageURL;
 
@@ -426,7 +421,6 @@ export default function App() {
                 .account("0xdaeda865296CeE66dc6863f9e93751f00B3606Fb")
                 .method(ABIVeSeaGetProfile)
                 .call(buyer);
-                console.log("veSeaProfile", veSeaProfile)
                 if(veSeaProfile && veSeaProfile.decoded[0][1]) {
                   return veSeaProfile.decoded[0][1]
                 }
@@ -485,9 +479,13 @@ export default function App() {
 
         const amountsArray = Object.entries(amounts);
         amountsArray.sort((a, b) => b[1] - a[1]);
+
+        const top10AmountsArray = amountsArray.slice(0, 10);
+        const top10SortedAmounts = Object.fromEntries(top10AmountsArray);
+
         const sortedAmounts = Object.fromEntries(amountsArray);
 
-        setWalletAmounts(sortedAmounts);
+        setWalletAmounts(top10SortedAmounts);
         setTotalCount(totalCount);
         setVetCount(vetCount);
         setAvgPurchasePrices(avgPurchasePrices);
@@ -517,9 +515,12 @@ export default function App() {
 
         <div className="sections">
           <div className="prize">
-            <h2>Top 4 Buyers to pick VeFoodies:</h2>
-            
-            <div className="foodies">
+            <h2>Top 3 Buyers by $VET Spent will receive:</h2>
+            <img className="prize-image" src={prizeImage}></img>
+            <h3>First Place Receives 3 Tickets</h3>
+            <h3>Second Place Receives 2 Tickets</h3>
+            <h3>Third Place Receives 1 Ticket</h3>
+            {/* <div className="foodies">
 
             <div className="prize-item">
             <p className="caption">VeFoodies 504</p>
@@ -553,12 +554,12 @@ export default function App() {
               alt="sweeper reward"
             /></div>
 
-          </div>
+          </div> */}
           </div>
       
           <div className="scoreboard">
             
-            <h2>Buyer Rankings</h2>
+            <h2>Top 10 Buyer Rankings</h2>
 
             <ul>
               {Object.entries(walletCounts).map(([wallet, count]) => (
