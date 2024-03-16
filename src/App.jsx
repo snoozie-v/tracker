@@ -12,21 +12,18 @@ import {
   ABIVeSeaGetProfile,
   ABIWoVGetAccountProperties
 } from "./components/ABI";
-import foodies504 from "./assets/foodies_504.jpg"
-import foodies2370 from "./assets/foodies_2370.jpg"
-import foodies2847 from "./assets/foodies_2847.jpg"
-import foodies2849 from "./assets/foodies_2849.jpg"
+
 
 const connex = new Connex({
   node: "https://mainnet.veblocks.net",
   network: "main"
 });
 
-const startDateTimeString = "2/1/24 12:00 UTC";
+const startDateTimeString = "3/1/24 12:00 UTC";
 const startTimeStamp = Date.parse(startDateTimeString) / 1000; 
 
 
-const endDateTimeString = "2/29/24 12:00 UTC";
+const endDateTimeString = "3/31/24 12:00 UTC";
 const endTimeStamp = Date.parse(endDateTimeString) / 1000;
 
 function getAccountForContract(contractAddress) {
@@ -74,6 +71,7 @@ async function getImageForCollection(account, tokenId) {
       imageUrl = metadata.image;
       presentImage = await fetch(`https://arweave.net/${imageUrl.substr(5)}`);
       presentImageURL = presentImage.url;
+    
 
       }
       return presentImageURL;
@@ -439,13 +437,12 @@ export default function App() {
 
             decodedLog.price = price;
             decodedLog.tokenId = tokenId;
-
             const account = getAccountForContract(nftAddress);
             decodedLog.image = await getImageForCollection(account, tokenId);
             return decodedLog;
           })
         );
-
+        console.log(formattedTransfers)
         setTransfers(formattedTransfers);
         const amounts = {};
         const quantities = {};
