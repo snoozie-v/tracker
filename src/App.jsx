@@ -19,11 +19,11 @@ const connex = new Connex({
   network: "main"
 });
 
-const startDateTimeString = "3/1/24 12:00 UTC";
+const startDateTimeString = "4/1/24 12:00 UTC";
 const startTimeStamp = Date.parse(startDateTimeString) / 1000; 
 
 
-const endDateTimeString = "3/31/24 12:00 UTC";
+const endDateTimeString = "5/1/24 12:00 UTC";
 const endTimeStamp = Date.parse(endDateTimeString) / 1000;
 
 function getAccountForContract(contractAddress) {
